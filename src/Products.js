@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Input, Select, Button, Pagination, InputNumber } from 'antd';
 import ProductCard from './ProductCard';
+import axios from 'axios';
 
 const { Option } = Select;
 
@@ -24,6 +25,12 @@ const Products = () => {
     // TODO
     // 假设getProduct是一个异步函数，从后端API获取商品数据
     // setProducts(获取到的商品数据);
+    try {
+      const response = await axios.get('http://localhost:8080/api/products');
+      return response
+    } catch (error) {
+      console.error('There was an error!', error);
+    }
     const res = await getProductAndTotal(name, category, priceRangeStart, priceRangeEnd, page)
     setProducts(res.products)
     setTotal(res.total)
