@@ -25,7 +25,7 @@ const Products = () => {
     // 假设getProduct是一个异步函数，从后端API获取商品数据
     // setProducts(获取到的商品数据);
     try {
-      const response = await fetch('你的API地址');
+      const response = await fetch('http://localhost:8080/api/products/list');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
