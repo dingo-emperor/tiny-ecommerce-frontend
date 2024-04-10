@@ -26,7 +26,7 @@ const Products = () => {
     // 假设getProduct是一个异步函数，从后端API获取商品数据
     // setProducts(获取到的商品数据);
     try {
-      const response = await axios.get('http://localhost:8080/api/products/list')
+      const response = await axios.get('http://localhost:8080/api/products')
       console.log("response:", response)
     } catch (error) {
       console.error('There was an error on axios: ', error);
