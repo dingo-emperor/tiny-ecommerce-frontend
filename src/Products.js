@@ -33,6 +33,14 @@ const Products = () => {
       setProducts(products)
     } catch (error) {
       console.error('There was an error on axios: ', error);
+      const products = [{
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }]
+      setProducts(products)
+      setTotal(50)
     }
 
     // const res = await getProductAndTotal(name, category, priceRangeStart, priceRangeEnd, page)
@@ -40,19 +48,19 @@ const Products = () => {
     // setTotal(res.total)
   };
 
-  const getProductAndTotal = async (name, category, priceRangeStart, priceRangeEnd, page) => {
-    const products = [{
-        name: "name",
-        category: "category",
-        brand: "brand",
-        price: 114514
-      }]
-    let total = 50    
-    return {
-        products,
-        total
-    }
-  }
+  // const getProductAndTotal = async (name, category, priceRangeStart, priceRangeEnd, page) => {
+  //   const products = [{
+  //       name: "name",
+  //       category: "category",
+  //       brand: "brand",
+  //       price: 114514
+  //     }]
+  //   let total = 50    
+  //   return {
+  //       products,
+  //       total
+  //   }
+  // }
 
   const setFilters = (values) => {
     console.log(values)
