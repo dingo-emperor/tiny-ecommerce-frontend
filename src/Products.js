@@ -6,6 +6,7 @@ import axios from 'axios';
 const { Option } = Select;
 
 const Products = () => {
+  const pageSize = 10; // 每页显示的商品数量
   const [products, setProducts] = useState([]); // 假设这里是从API获取的商品列表
   const [form] = Form.useForm();
   const [name, setName] = useState(undefined)
@@ -13,7 +14,7 @@ const Products = () => {
   const [priceRangeStart, setPriceRangeStart] = useState(undefined)
   const [priceRangeEnd, setPriceRangeEnd] = useState(undefined)
   const [page, setPage] = useState(1)
-  const [total, setTotal] = useState(0)
+  const [total, setTotal] = useState(30)
 
   useEffect(() => {
     // 模拟从API获取数据
@@ -27,22 +28,26 @@ const Products = () => {
     // setProducts(获取到的商品数据);
     try {
       const response = await axios.get('http://localhost:8080/api/products')
-      console.log("response:", response)
+      const data = await response.data.content
+      console.log("response data:", data)
+      setProducts(res.products)
+      setTotal(res.total)
     } catch (error) {
       console.error('There was an error on axios: ', error);
     }
-    const res = await getProductAndTotal(name, category, priceRangeStart, priceRangeEnd, page)
-    setProducts(res.products)
-    setTotal(res.total)
+
+    // const res = await getProductAndTotal(name, category, priceRangeStart, priceRangeEnd, page)
+    // setProducts(res.products)
+    // setTotal(res.total)
   };
 
   const getProductAndTotal = async (name, category, priceRangeStart, priceRangeEnd, page) => {
     const products = [{
         name: "name",
         category: "category",
-        price: 114514,
-        description: "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription"
-    }]
+        brand: "brand",
+        price: 114514
+      }]
     let total = 50    
     return {
         products,
