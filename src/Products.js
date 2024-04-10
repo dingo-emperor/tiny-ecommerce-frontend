@@ -28,10 +28,9 @@ const Products = () => {
     // setProducts(获取到的商品数据);
     try {
       const response = await axios.get('http://localhost:8080/api/products')
-      const data = await response.data.content
+      const products = await response.data.content
       console.log("response data:", data)
-      setProducts(res.products)
-      setTotal(res.total)
+      setProducts(products)
     } catch (error) {
       console.error('There was an error on axios: ', error);
     }
