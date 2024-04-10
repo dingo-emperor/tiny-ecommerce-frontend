@@ -29,7 +29,7 @@ const Products = () => {
     try {
       const response = await axios.get('http://localhost:8080/api/products')
       const products = await response.data.content
-      console.log("response data:", data)
+      console.log("response data:", products)
       setProducts(products)
     } catch (error) {
       console.error('There was an error on axios: ', error);
