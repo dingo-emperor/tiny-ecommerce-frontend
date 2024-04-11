@@ -24,7 +24,8 @@ const Products = () => {
   }, [name, category, brand, sort, minPrice, maxPrice, page]);
 
 
-  const fetchFilteredProducts = async (name, category, minPrice, maxPrice, page) => {
+  const fetchFilteredProducts = async (name, category, brand, sort, minPrice, maxPrice, page) => {
+    console.log("params: ", name, category, brand, sort, minPrice, maxPrice, page)
     // TODO
     // 假设getProduct是一个异步函数，从后端API获取商品数据
     // setProducts(获取到的商品数据);
@@ -38,6 +39,7 @@ const Products = () => {
           minPrice: minPrice,
           maxPrice: maxPrice,
           page: page,
+          size: pageSize
         }
       })
       const products = await response.data.content
@@ -60,7 +62,12 @@ const Products = () => {
   };
 
   const setFilters = (values) => {
-    console.log(values)
+    console.log("values: ", values)
+    for (let key in values) {
+      if (values[key] === "") {
+        values[key] = undefined
+      }
+    }
     setName(values.name)
     setCategory(values.category)
     setBrand(values.brand)
