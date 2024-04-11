@@ -30,13 +30,15 @@ const Products = () => {
     // setProducts(获取到的商品数据);
     try {
       const response = await axios.get('http://localhost:8080/api/products', {
-        name: name,
-        category: category,
-        brand: brand,
-        sort: sort,
-        minPrice: minPrice,
-        maxPrice: maxPrice,
-        page: page,
+        params: {
+          name: name,
+          category: category,
+          brand: brand,
+          sort: sort,
+          minPrice: minPrice,
+          maxPrice: maxPrice,
+          page: page,
+        }
       })
       const products = await response.data.content
       const total = await response.data.totalElements
