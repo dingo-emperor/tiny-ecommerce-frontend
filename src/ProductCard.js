@@ -8,7 +8,8 @@ const ProductCard = ({ name, category, price, brand }) => (
     hoverable
     style={{ width: 240 }}
   >
-    <Meta title={name} description={`${category}`} />
+    <Meta title={name} />
+    <p>Category: {category}</p>
     <p>Brand: {brand}</p>
     <p>Price: {price}</p>
   </Card>
