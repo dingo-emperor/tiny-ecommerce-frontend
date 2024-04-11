@@ -38,7 +38,7 @@ const Products = () => {
           sort: sort,
           minPrice: minPrice,
           maxPrice: maxPrice,
-          page: page,
+          page: page - 1,
           size: pageSize
         }
       })
