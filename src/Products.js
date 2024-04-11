@@ -11,26 +11,39 @@ const Products = () => {
   const [form] = Form.useForm();
   const [name, setName] = useState(undefined)
   const [category, setCategory] = useState(undefined)
-  const [priceRangeStart, setPriceRangeStart] = useState(undefined)
-  const [priceRangeEnd, setPriceRangeEnd] = useState(undefined)
+  const [brand, setBrand] = useState(undefined)
+  const [sort, setSort] = useState(undefined)
+  const [minPrice, setMinPrice] = useState(undefined)
+  const [maxPrice, setMaxPrice] = useState(undefined)
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(30)
 
   useEffect(() => {
     // 模拟从API获取数据
-    fetchFilteredProducts(name, category, priceRangeStart, priceRangeEnd, page);
-  }, [name, category, priceRangeStart, priceRangeEnd, page]);
+    fetchFilteredProducts(name, category, brand, sort, minPrice, maxPrice, page);
+  }, [name, category, brand, sort, minPrice, maxPrice, page]);
 
 
-  const fetchFilteredProducts = async (name, category, priceRangeStart, priceRangeEnd, page) => {
+  const fetchFilteredProducts = async (name, category, minPrice, maxPrice, page) => {
     // TODO
     // 假设getProduct是一个异步函数，从后端API获取商品数据
     // setProducts(获取到的商品数据);
     try {
-      const response = await axios.get('http://localhost:8080/api/products')
+      const response = await axios.get('http://localhost:8080/api/products', {
+        name: name,
+        category: category,
+        brand: brand,
+        sort: sort,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        page: page,
+      })
       const products = await response.data.content
-      console.log("response data:", products)
+      const total = await response.data.totalElements
+      console.log("responsed products:", products)
+      console.log("responsed total:", total)
       setProducts(products)
+      setTotal(total)
     } catch (error) {
       console.error('There was an error on axios: ', error);
       const products = [{
@@ -42,32 +55,16 @@ const Products = () => {
       setProducts(products)
       setTotal(50)
     }
-
-    // const res = await getProductAndTotal(name, category, priceRangeStart, priceRangeEnd, page)
-    // setProducts(res.products)
-    // setTotal(res.total)
   };
-
-  // const getProductAndTotal = async (name, category, priceRangeStart, priceRangeEnd, page) => {
-  //   const products = [{
-  //       name: "name",
-  //       category: "category",
-  //       brand: "brand",
-  //       price: 114514
-  //     }]
-  //   let total = 50    
-  //   return {
-  //       products,
-  //       total
-  //   }
-  // }
 
   const setFilters = (values) => {
     console.log(values)
     setName(values.name)
     setCategory(values.category)
-    setPriceRangeStart(values.priceRangeStart)
-    setPriceRangeEnd(values.priceRangeEnd)
+    setBrand(values.brand)
+    setSort(values.sort)
+    setMinPrice(values.minPrice)
+    setMaxPrice(values.maxPrice)
   }
 
   const changePage = (page, pageSize) => {
@@ -94,9 +91,19 @@ const Products = () => {
             {/* 根据实际分类添加Option */}
           </Select>
         </Form.Item>
+        <Form.Item name="brand">
+          <Input placeholder="brand" />
+        </Form.Item>
+        <Form.Item name="sort">
+          <Select placeholder="sort">
+            <Option value="asc">ascend</Option>
+            <Option value="desc">descend</Option>
+            {/* 根据实际分类添加Option */}
+          </Select>
+        </Form.Item>
         <Form.Item label="价格区间" style={{ marginBottom: 0 }}>
             <Form.Item
-                name="priceRangeStart"
+                name="minPrice"
                 rules={[{ type: 'number', min: 0, message: '最低价格必须大于等于0' }]}
                 style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
             >
@@ -108,7 +115,7 @@ const Products = () => {
                 -
             </span>
             <Form.Item
-                name="priceRangeEnd"
+                name="maxPrice"
                 rules={[{ type: 'number', min: 0, message: '最高价格必须大于等于0' }]}
                 style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
             >
