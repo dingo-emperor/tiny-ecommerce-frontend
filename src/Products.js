@@ -32,7 +32,7 @@ const Products = () => {
     try {
       const response = await axios.get('http://localhost:8080/api/products/search', {
         params: {
-          name: name,
+          nameLike: name,
           category: category,
           brand: brand,
           sort: sort,
