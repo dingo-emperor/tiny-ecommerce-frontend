@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Tag } from 'antd';
+import { Space, Table, Modal, Input } from 'antd';
 import axios from 'axios';
 
 const Manager = () => {
@@ -9,12 +9,29 @@ const Manager = () => {
         pageSize: 10,
         total: 50,
     });
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        console.log(pagination)
+        console.log('pagination', pagination)
         // 模拟从API获取数据
         fetchAllProducts(pagination);
     }, [pagination.current, pagination.pageSize, pagination.total]);
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleDelete = () => {
+    }
+      
 
     const fetchAllProducts = async (pagination) => {
         try {
@@ -43,20 +60,23 @@ const Manager = () => {
                 {
                     key: '1',
                     name: 'John Brown',
-                    age: 32,
-                    address: 'New York No. 1 Lake Park',
+                    brand: 'b1',
+                    price: 32,
+                    category: 'c1',
                 },
                 {
                     key: '2',
                     name: 'Jim Green',
-                    age: 42,
-                    address: 'London No. 1 Lake Park',
+                    brand: 'b2',
+                    price: 42,
+                    category: 'c2',
                 },
                 {
                     key: '3',
                     name: 'Joe Black',
-                    age: 32,
-                    address: 'Sydney No. 1 Lake Park',
+                    brand: 'b3',
+                    price: 32,
+                    category: 'c3',
                 },
             ];
             setProducts(products)
@@ -73,7 +93,6 @@ const Manager = () => {
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
-        render: (text) => <a>{text}</a>,
     },
     {
         title: 'Brand',
@@ -84,24 +103,19 @@ const Manager = () => {
         title: 'Category',
         dataIndex: 'category',
         key: 'category',
-        render: (_, record, idx) => (
-            <a>Edit</a>
-        ),
     },
     {
         title: 'Price',
         dataIndex: 'price',
         key: 'price',
-        render: (_, record, idx) => (
-            <a>Edit</a>
-        ),
     },
     {
         title: 'Action',
         key: 'action',
         render: (_, record, idx) => (
             <Space size="middle">
-                <a>Delete</a>
+                <a onClick={showModal}>Edit</a>
+                <a onClick={handleDelete}>Delete</a>
             </Space>
         ),
     },
@@ -110,6 +124,10 @@ const Manager = () => {
     return (
         <div>
             <Table columns={columns} dataSource={products} pagination={pagination} onChange={handleTableChange} />
+            <Modal title="Edit product information" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+                <Input type="text" placeholder="Category" />
+                <Input type="text" placeholder="Price" />
+            </Modal>
         </div>
     )
 }
