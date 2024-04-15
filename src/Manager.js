@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Modal, Input } from 'antd';
+import { Space, Table, Modal, Input, Button } from 'antd';
 import axios from 'axios';
 
 const Manager = () => {
@@ -9,9 +9,14 @@ const Manager = () => {
         pageSize: 10,
         total: 50,
     });
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [newCategory, setNewCategory] = useState("");
     const [newPrice, setNewPrice] = useState("");
+    const [addCategory, setAddCategory] = useState("");
+    const [addPrice, setAddPrice] = useState("");
+    const [addName, setAddName] = useState("");
+    const [addBrand, setAddBrand] = useState("");
 
     useEffect(() => {
         console.log('pagination', pagination)
@@ -19,25 +24,72 @@ const Manager = () => {
         fetchAllProducts(pagination);
     }, [pagination.current, pagination.pageSize, pagination.total]);
 
-    const showModal = () => {
-        setIsModalOpen(true);
+    const showEditModal = () => {
+        setIsEditModalOpen(true);
     };
 
-    const handleOk = () => {
+    const showAddModal = () => {   
+        setIsAddModalOpen(true);
+    };
+
+    const handleEditOk = () => {
         console.log('newCategory:', newCategory);
         console.log('newPrice:', newPrice);
+
+        // TODO: Update product information in database(should bring name, brand, category, price to backend)
+
         setNewCategory("");
         setNewPrice("");
-        setIsModalOpen(false);
+        setIsEditModalOpen(false);
     };
 
-    const handleCancel = () => {
+    const handleEditCancel = () => {
         setNewCategory("");
         setNewPrice("");
-        setIsModalOpen(false);
+        setIsEditModalOpen(false);
     };
+
+    const handleAddOk = () => {
+        console.log('addName:', addName);
+        console.log('addBrand:', addBrand);
+        console.log('addCategory:', addCategory);
+        console.log('addPrice:', addPrice);
+
+        // TODO: Add product to database
+        
+        setAddCategory("");
+        setAddPrice("");
+        setAddName("");
+        setAddBrand("");
+        setIsAddModalOpen(false);
+    };
+
+    const handleAddCancel = () => {
+        setAddCategory("");
+        setAddPrice("");
+        setAddName("");
+        setAddBrand("");
+        setIsAddModalOpen(false);
+    };
+
+    const handleAddCategoryChange = (event) => {
+        setAddCategory(event.target.value);
+    }
+
+    const handleAddBrandChange = (event) => {
+        setAddBrand(event.target.value);
+    }
+
+    const handleAddPriceChange = (event) => {
+        setAddPrice(event.target.value);
+    }
+
+    const handleAddNameChange = (event) => {
+        setAddName(event.target.value);
+    }
 
     const handleDelete = () => {
+        // TODO Delete product from cart
     }
     
     const handleCategoryChange = (event) => {
@@ -129,7 +181,7 @@ const Manager = () => {
         key: 'action',
         render: (_, record, idx) => (
             <Space size="middle">
-                <a onClick={showModal}>Edit</a>
+                <a onClick={showEditModal}>Edit</a>
                 <a onClick={handleDelete}>Delete</a>
             </Space>
         ),
@@ -138,10 +190,17 @@ const Manager = () => {
     
     return (
         <div>
+            <Button type="primary" onClick={showAddModal}>Add product</Button>
             <Table columns={columns} dataSource={products} pagination={pagination} onChange={handleTableChange} />
-            <Modal title="Edit product information" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Edit product information" open={isEditModalOpen} onOk={handleEditOk} onCancel={handleEditCancel}>
                 <Input type="text" placeholder="Category" value={newCategory} onChange={handleCategoryChange} />
                 <Input type="text" placeholder="Price" value={newPrice} onChange={handlePriceChange} />
+            </Modal>
+            <Modal title="Add product" open={isAddModalOpen} onOk={handleAddOk} onCancel={handleAddCancel}>
+                <Input type="text" placeholder="Name" value={addName} onChange={handleAddNameChange} />
+                <Input type="text" placeholder="Brand" value={addBrand} onChange={handleAddBrandChange} />
+                <Input type="text" placeholder="Category" value={addCategory} onChange={handleAddCategoryChange} />
+                <Input type="text" placeholder="Price" value={addPrice} onChange={handleAddPriceChange} />
             </Modal>
         </div>
     )

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Modal, Input, InputNumber } from 'antd';
+import { Space, Table, Modal, Input, InputNumber, Button } from 'antd';
 import axios from 'axios';
 
 const Cart = () => {
@@ -17,6 +17,11 @@ const Cart = () => {
     }, [pagination.current, pagination.pageSize, pagination.total]);
 
     const handleDelete = () => {
+        // TODO Delete product from cart
+    }
+
+    const clearCart = () => {
+        // TODO: Clear cart in database
     }
       
 
@@ -110,6 +115,7 @@ const Cart = () => {
     
     return (
         <div>
+            <Button type="primary" onClick={clearCart}>Clear Cart</Button>
             <Table columns={columns} dataSource={products} pagination={pagination} onChange={handleTableChange} />
         </div>
     )
