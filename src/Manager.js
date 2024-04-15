@@ -10,6 +10,8 @@ const Manager = () => {
         total: 50,
     });
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [newCategory, setNewCategory] = useState("");
+    const [newPrice, setNewPrice] = useState("");
 
     useEffect(() => {
         console.log('pagination', pagination)
@@ -22,22 +24,35 @@ const Manager = () => {
     };
 
     const handleOk = () => {
+        console.log('newCategory:', newCategory);
+        console.log('newPrice:', newPrice);
+        setNewCategory("");
+        setNewPrice("");
         setIsModalOpen(false);
     };
 
     const handleCancel = () => {
+        setNewCategory("");
+        setNewPrice("");
         setIsModalOpen(false);
     };
 
     const handleDelete = () => {
     }
-      
+    
+    const handleCategoryChange = (event) => {
+        setNewCategory(event.target.value);
+    }
+
+    const handlePriceChange = (event) => {
+        setNewPrice(event.target.value);
+    }
 
     const fetchAllProducts = async (pagination) => {
         try {
             const response = await axios.get('http://localhost:8080/api/products/search', {
                 params: {
-                    page: pagination.current - 1,  // API 通常以 0 为基数计数页面
+                    page: pagination.current - 1,  
                     size: pagination.pageSize,
                 }
             })
@@ -125,8 +140,8 @@ const Manager = () => {
         <div>
             <Table columns={columns} dataSource={products} pagination={pagination} onChange={handleTableChange} />
             <Modal title="Edit product information" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-                <Input type="text" placeholder="Category" />
-                <Input type="text" placeholder="Price" />
+                <Input type="text" placeholder="Category" value={newCategory} onChange={handleCategoryChange} />
+                <Input type="text" placeholder="Price" value={newPrice} onChange={handlePriceChange} />
             </Modal>
         </div>
     )
