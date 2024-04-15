@@ -48,9 +48,7 @@ const Manager = () => {
             price: newPrice,
         })
 
-        if (response.success === true) {
-            fetchAllProducts(pagination);
-        }
+        fetchAllProducts(pagination);
 
         setNewCategory("");
         setNewPrice("");
