@@ -23,6 +23,11 @@ const Cart = () => {
     const clearCart = () => {
         // TODO: Clear cart in database
     }
+
+    const handleNumberChange = (value) => {
+        // TODO Update product number in cart
+        console.log('changed', value);
+    }
       
 
     const fetchAllProducts = async (pagination) => {
@@ -106,7 +111,7 @@ const Cart = () => {
         key: 'action',
         render: (_, record, idx) => (
             <Space size="middle">
-                <InputNumber placeholder="number" min={0} />
+                <InputNumber placeholder="number" min={0} onChange={handleNumberChange} />
                 <a onClick={handleDelete}>Delete</a>
             </Space>
         ),

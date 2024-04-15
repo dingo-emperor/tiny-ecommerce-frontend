@@ -17,6 +17,8 @@ const Manager = () => {
     const [addPrice, setAddPrice] = useState("");
     const [addName, setAddName] = useState("");
     const [addBrand, setAddBrand] = useState("");
+    const [currProductName, setCurrProductName] = useState("");
+    const [currProductBrand, setCurrProductBrand] = useState("");
 
     useEffect(() => {
         console.log('pagination', pagination)
@@ -24,7 +26,9 @@ const Manager = () => {
         fetchAllProducts(pagination);
     }, [pagination.current, pagination.pageSize, pagination.total]);
 
-    const showEditModal = () => {
+    const showEditModal = (name, brand) => () => {
+        setCurrProductName(name);
+        setCurrProductBrand(brand);
         setIsEditModalOpen(true);
     };
 
@@ -32,14 +36,26 @@ const Manager = () => {
         setIsAddModalOpen(true);
     };
 
-    const handleEditOk = () => {
+    const handleEditOk = async () => {
         console.log('newCategory:', newCategory);
         console.log('newPrice:', newPrice);
 
         // TODO: Update product information in database(should bring name, brand, category, price to backend)
+        const response = await axios.put('http://localhost:8080/api/products/update', {
+            name: currProductName,
+            brand: currProductBrand,
+            category: newCategory,
+            price: newPrice,
+        })
+
+        if (response.success === true) {
+            fetchAllProducts(pagination);
+        }
 
         setNewCategory("");
         setNewPrice("");
+        setCurrProductName("");
+        setCurrProductBrand("");
         setIsEditModalOpen(false);
     };
 
@@ -88,8 +104,11 @@ const Manager = () => {
         setAddName(event.target.value);
     }
 
-    const handleDelete = () => {
-        // TODO Delete product from cart
+    const handleDelete = (name) => {
+        return () => {
+            console.log('delete:', name);
+            // TODO Delete product 
+        }
     }
     
     const handleCategoryChange = (event) => {
@@ -181,8 +200,8 @@ const Manager = () => {
         key: 'action',
         render: (_, record, idx) => (
             <Space size="middle">
-                <a onClick={showEditModal}>Edit</a>
-                <a onClick={handleDelete}>Delete</a>
+                <a onClick={showEditModal(record.name, record.brand)}>Edit</a>
+                <a onClick={handleDelete(record.name)}>Delete</a>
             </Space>
         ),
     },
