@@ -43,7 +43,7 @@ const Manager = () => {
             })
             const data = await response.data.content
             const total = await response.data.totalElements
-            products = data.map((product, idx) => {
+            const products = data.map((product, idx) => {
                 return {
                     key: String(idx),
                     name: product.name,
