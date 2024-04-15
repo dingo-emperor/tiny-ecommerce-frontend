@@ -3,6 +3,7 @@ import { Space, Table, Modal, Input, Button } from 'antd';
 import axios from 'axios';
 
 const Manager = () => {
+    const [refresh, setRefresh] = useState(false);
     const [products, setProducts] = useState([]);
     const [pagination, setPagination] = useState({
         current: 1,
@@ -24,7 +25,7 @@ const Manager = () => {
         console.log('pagination', pagination)
         // 模拟从API获取数据
         fetchAllProducts(pagination);
-    }, [pagination.current, pagination.pageSize, pagination.total]);
+    }, [pagination.current, pagination.pageSize, pagination.total, refresh]);
 
     const showEditModal = (name, brand) => () => {
         setCurrProductName(name);
@@ -47,8 +48,8 @@ const Manager = () => {
             category: newCategory,
             price: newPrice,
         })
-
-        fetchAllProducts(pagination);
+        console.log('response:', response);
+        setRefresh(!refresh);
 
         setNewCategory("");
         setNewPrice("");
