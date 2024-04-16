@@ -1,0 +1,4 @@
+:where(.css-dev-only-do-not-override-1kuana8).ant-form-item .ant-form-item-control-input-content {
+    display: flex;
+    flex-direction: row;
+}

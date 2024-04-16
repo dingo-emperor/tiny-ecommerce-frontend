@@ -3,10 +3,12 @@ import { Row, Col, Form, Input, Select, Button, Pagination, InputNumber } from '
 import ProductCard from './ProductCard';
 import axios from 'axios';
 
+import './product.css';
+
 const { Option } = Select;
 
 const Products = () => {
-  const pageSize = 10; // 每页显示的商品数量
+  const pageSize = 18; // 每页显示的商品数量
   const [products, setProducts] = useState([]); // 假设这里是从API获取的商品列表
   const [form] = Form.useForm();
   const [name, setName] = useState(undefined)
@@ -26,9 +28,6 @@ const Products = () => {
 
   const fetchFilteredProducts = async (name, category, brand, sort, minPrice, maxPrice, page) => {
     console.log("params: ", name, category, brand, sort, minPrice, maxPrice, page)
-    // TODO
-    // 假设getProduct是一个异步函数，从后端API获取商品数据
-    // setProducts(获取到的商品数据);
     try {
       const response = await axios.get('http://localhost:8080/api/products/search', {
         params: {
@@ -51,6 +50,86 @@ const Products = () => {
     } catch (error) {
       console.error('There was an error on axios: ', error);
       const products = [{
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
+        name: "name",
+        category: "category",
+        brand: "brand",
+        price: 114514
+      }, {
         name: "name",
         category: "category",
         brand: "brand",
@@ -83,61 +162,49 @@ const Products = () => {
 
   return (
     <div>
-      <Form form={form} onFinish={setFilters} layout="inline">
-        {/* <Form.Item name="sortPrice" label="价格排序">
-            <Select placeholder="选择排序方式">
-                <Option value="ascend">升序</Option>
-                <Option value="descend">降序</Option>
-            </Select>
-        </Form.Item> */}
+      <Form form={form} onFinish={setFilters} layout="inline" style={{ marginTop: '32px', marginBottom: '32px' }}>
         <Form.Item name="name">
-          <Input placeholder="商品名称" />
+          <Input placeholder="Product name" />
         </Form.Item>
         <Form.Item name="category">
-          <Select placeholder="选择分类">
-            <Option value="category1">分类1</Option>
-            <Option value="category2">分类2</Option>
-            {/* 根据实际分类添加Option */}
-          </Select>
+          <Input placeholder="Category" />
         </Form.Item>
         <Form.Item name="brand">
           <Input placeholder="brand" />
         </Form.Item>
         <Form.Item name="sort">
           <Select placeholder="sort">
-            <Option value="asc">ascend</Option>
-            <Option value="desc">descend</Option>
+            <Option value="asc">ASC</Option>
+            <Option value="desc">DES</Option>
             {/* 根据实际分类添加Option */}
           </Select>
         </Form.Item>
-        <Form.Item label="价格区间" style={{ marginBottom: 0 }}>
+        <Form.Item label="Price" style={{ marginBottom: 0, display: 'flex' }}>
             <Form.Item
                 name="minPrice"
-                rules={[{ type: 'number', min: 0, message: '最低价格必须大于等于0' }]}
-                style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
+                rules={[{ type: 'number', min: 0, message: 'Lowest price should >= 0' }]}
             >
-                <InputNumber placeholder="最低价格" min={0} />
+                <InputNumber placeholder="Lowest" min={0} />
             </Form.Item>
             <span
-                style={{ display: 'inline-block', width: '16px', textAlign: 'center' }}
+                style={{ display: 'inline-block', width: '16px', textAlign: 'center', marginInlineEnd: '16px'}}
             >
                 -
             </span>
             <Form.Item
                 name="maxPrice"
-                rules={[{ type: 'number', min: 0, message: '最高价格必须大于等于0' }]}
-                style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
+                rules={[{ type: 'number', min: 0, message: 'Highest price should >= 0' }]}
             >
-                <InputNumber placeholder="最高价格" min={0} />
+                <InputNumber placeholder="Highest" min={0} />
             </Form.Item>
             </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit">搜索</Button>
+          <Button type="primary" htmlType="submit">Search</Button>
         </Form.Item>
       </Form>
-      <Row gutter={16}>
+      <Row gutter={[16, 16]}>
         {products.map(product => (
-          <Col span={8} key={product.name}>
+          <Col span={4} key={product.name}>
             <ProductCard {...product} />
           </Col>
         ))}

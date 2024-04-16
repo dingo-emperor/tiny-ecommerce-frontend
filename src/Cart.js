@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Modal, Input, InputNumber, Button } from 'antd';
+import { Space, Table, Typography, InputNumber, Button } from 'antd';
 import axios from 'axios';
+
+const { Title } = Typography;
 
 const Cart = () => {
     const userName = 'Alice';
@@ -121,7 +123,7 @@ const Cart = () => {
     
     return (
         <div>
-            <p>Welcome, {userName}</p>
+            <Title>Welcome, {userName}</Title>
             <Button type="primary" onClick={clearCart}>Clear Cart</Button>
             <Table columns={columns} dataSource={products} pagination={pagination} onChange={handleTableChange} />
         </div>
