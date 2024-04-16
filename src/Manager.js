@@ -41,7 +41,6 @@ const Manager = () => {
         console.log('newCategory:', newCategory);
         console.log('newPrice:', newPrice);
 
-        // TODO: Update product information in database(should bring name, brand, category, price to backend)
         const response = await axios.put('http://localhost:8080/api/products/update', {
             name: currProductName,
             brand: currProductBrand,
@@ -64,13 +63,20 @@ const Manager = () => {
         setIsEditModalOpen(false);
     };
 
-    const handleAddOk = () => {
+    const handleAddOk = async () => {
         console.log('addName:', addName);
         console.log('addBrand:', addBrand);
         console.log('addCategory:', addCategory);
         console.log('addPrice:', addPrice);
 
         // TODO: Add product to database
+        await axios.post('http://localhost:8080/api/products/add', {
+            name: addName,
+            brand: addBrand,
+            category: addCategory,
+            price: addPrice,
+        })
+        setRefresh(!refresh);
         
         setAddCategory("");
         setAddPrice("");

@@ -3,6 +3,7 @@ import { Space, Table, Modal, Input, InputNumber, Button } from 'antd';
 import axios from 'axios';
 
 const Cart = () => {
+    const userName = 'Alice';
     const [products, setProducts] = useState([]);
     const [pagination, setPagination] = useState({
         current: 1,
@@ -120,6 +121,7 @@ const Cart = () => {
     
     return (
         <div>
+            <p>Welcome, {userName}</p>
             <Button type="primary" onClick={clearCart}>Clear Cart</Button>
             <Table columns={columns} dataSource={products} pagination={pagination} onChange={handleTableChange} />
         </div>
