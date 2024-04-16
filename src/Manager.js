@@ -104,8 +104,10 @@ const Manager = () => {
     }
 
     const handleDelete = (name) => {
-        return () => {
+        return async () => {
             console.log('delete:', name);
+            await axios.delete(`http://localhost:8080/api/products/${name}`)
+            setRefresh(!refresh);
             // TODO Delete product 
         }
     }
