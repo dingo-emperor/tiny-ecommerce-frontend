@@ -84,7 +84,7 @@ const Cart = () => {
                 }
             })
             setProducts(products)
-            setPagination({ ...pagination, total: total })
+            // setPagination({ ...pagination, total: total })
             setRefresh(!refresh);
         } catch (error) {    
             console.error('There was an error on axios: ', error);
