@@ -67,6 +67,7 @@ const Cart = () => {
                     size: pagination.pageSize,
                 }
             })
+            console.log('response:', response);
             const data = await response.data
             const totalResponse = await axios.get(`http://localhost:8080/api/carts/count/${userName}`)
             const total = await totalResponse.data
