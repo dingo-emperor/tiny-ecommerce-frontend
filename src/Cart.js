@@ -68,9 +68,9 @@ const Cart = () => {
                 }
             })
             console.log('response:', response);
-            const data = await response.data
+            const data = await response.data.data
             const totalResponse = await axios.get(`http://localhost:8080/api/carts/count/${userName}`)
-            const total = await totalResponse.data
+            const total = await totalResponse.data.data
             const  products = data.map((product, idx) => {
                 return {
                     key: String(idx),
