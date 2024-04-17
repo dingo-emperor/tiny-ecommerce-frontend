@@ -33,7 +33,7 @@ const Cart = () => {
 
     const clearCart = (userName) => async () => {
         try {
-            const response = await axios.delete(`http://localhost:8080/api/clear/${userName}`)
+            const response = await axios.delete(`http://localhost:8080/api/carts/clear/${userName}`)
             console.log('response:', response);
         } catch (error) {
             console.error('There was an error on axios: ', error);
