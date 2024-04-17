@@ -89,9 +89,8 @@ const Cart = () => {
             //         price: product.productDTO.price,
             //         quantity: product.quantity,
             //     }))
-            // setProducts(products)
+            setProducts(products)
             setPagination({ ...pagination, total: total })
-            setRefresh(!refresh);
         } catch (error) {    
             console.error('There was an error on axios: ', error);
             const products = [
