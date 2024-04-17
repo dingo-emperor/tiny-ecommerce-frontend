@@ -82,6 +82,7 @@ const Cart = () => {
                     quantity: product.quantity,
                 }
             })
+            console.log('products:', products);
             setProducts(products)
             setPagination({ ...pagination, total: total })
             setRefresh(!refresh);
