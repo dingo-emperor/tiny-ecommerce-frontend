@@ -67,8 +67,9 @@ const Cart = () => {
                     size: pagination.pageSize,
                 }
             })
-            const data = await response.data.content
-            const total = await response.data.totalElements
+            const data = await response.data
+            const totalResponse = await axios.get(`http://localhost:8080/api/carts/count/${userName}`)
+            const total = await totalResponse.data
             const  products = data.map((product, idx) => {
                 return {
                     key: String(idx),
