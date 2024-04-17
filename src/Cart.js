@@ -75,7 +75,7 @@ const Cart = () => {
             const products = await data.map((product, idx) => {
                 return {
                     key: String(idx),
-                    name: product.productDTO.name,
+                    name: product.productname,
                     brand: product.productDTO.brand,
                     category: product.productDTO.category,
                     price: product.productDTO.price,
