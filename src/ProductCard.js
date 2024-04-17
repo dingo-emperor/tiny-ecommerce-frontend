@@ -10,8 +10,8 @@ const ProductCard = ({ name, category, price, brand }) => {
   const handleAddToCart = (userName, name) => async () => {
     // TODO Add product to cart
     axios.post('http://localhost:8080/api/carts', {
-      userName: userName,
-      productName: name,
+      username: userName,
+      productname: name,
       quantity: 1
     })
     console.log('Added product to cart');
