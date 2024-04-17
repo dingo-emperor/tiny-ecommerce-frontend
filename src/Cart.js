@@ -72,7 +72,16 @@ const Cart = () => {
             console.log('data:', data);
             // const totalResponse = await axios.get(`http://localhost:8080/api/carts/count/${userName}`)
             // const total = await totalResponse.data.data
-            console.log('productsDTO:', data[0].productDTO);
+            console.log('products:', data.map((product, idx) => {
+                return {
+                    key: String(idx),
+                    name: product.productname,
+                    brand: product.productDTO.brand,
+                    category: product.productDTO.category,
+                    price: product.productDTO.price,
+                    quantity: product.quantity,
+                }
+            }));
             const products = await data.map((product, idx) => {
                 return {
                     key: String(idx),
