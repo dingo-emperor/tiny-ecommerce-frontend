@@ -70,8 +70,9 @@ const Cart = () => {
             console.log('response:', response);
             const data = await response.data.data
             console.log('data:', data);
-            const totalResponse = await axios.get(`http://localhost:8080/api/carts/count/${userName}`)
-            const total = await totalResponse.data.data
+            // const totalResponse = await axios.get(`http://localhost:8080/api/carts/count/${userName}`)
+            // const total = await totalResponse.data.data
+            console.log('productsDTO:', data[0].productDTO);
             const products = await data.map((product, idx) => {
                 return {
                     key: String(idx),
@@ -82,7 +83,6 @@ const Cart = () => {
                     quantity: product.quantity,
                 }
             })
-            console.log('productsDTO:', data[0].productDTO);
             setProducts(products)
             setPagination({ ...pagination, total: total })
             setRefresh(!refresh);
