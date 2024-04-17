@@ -73,27 +73,15 @@ const Cart = () => {
             const totalResponse = await axios.get(`http://localhost:8080/api/carts/count/${userName}`)
             const total = await totalResponse.data.data
             console.log('total:', total);
-            const allProducts = []
-            for (let i = 0; i < data.length; i++) {
-                const product = data[i]
-                allProducts.push({
-                    key: String(i),
-                    name: product.productname,
-                    brand: product.productDTO.brand,
-                    category: product.productDTO.category,
-                    price: product.productDTO.price,
-                    quantity: product.quantity,
-                })
-            }
-            // const allProducts = await data.map((product, idx, arr) => ({
-            //         key: String(idx),
-            //         name: product.productname,
-            //         brand: product.productDTO.brand,
-            //         category: product.productDTO.category,
-            //         price: product.productDTO.price,
-            //         quantity: product.quantity,
-            //     }))
-            setProducts(allProducts)
+            const products = await data.map((product, idx, arr) => ({
+                key: String(idx),
+                name: product.productname,
+                brand: product.productDTO.brand,
+                category: product.productDTO.category,
+                price: product.productDTO.price,
+                quantity: product.quantity,
+            }))
+            setProducts(products)
             setPagination({ ...pagination, total: total })
         } catch (error) {    
             console.error('There was an error on axios: ', error);
