@@ -21,23 +21,46 @@ const Cart = () => {
     }, [pagination.current, pagination.pageSize, pagination.total, refresh]);
 
     const handleDelete = (userName, productName) => async () => {
-        // TODO Delete product from cart
+        try {
+            const response = await axios.delete(`http://localhost:8080/api/cart/${userName}/${productName}`)
+            console.log('response:', response);
+        } catch (error) {
+            console.error('There was an error on axios: ', error);
+        }
         setRefresh(!refresh);
     }
 
     const clearCart = (userName) => async () => {
-        // TODO: Clear cart in database
+        try {
+            const response = await axios.delete(`http://localhost:8080/api/clear/${userName}`)
+            console.log('response:', response);
+        } catch (error) {
+            console.error('There was an error on axios: ', error);
+        }
         setRefresh(!refresh);
     }
 
     const handleNumberChange = (userName, productName) => async (value) => {
+        try {
+            const response = await axios.post('http://localhost:8080/api/cart', {
+                username: userName,
+                productname: productName,
+                quantity: value
+            })
+            console.log('response:', response);
+            setRefresh(!refresh);
+        }
+        catch (error) {
+            console.error('There was an error on axios: ', error);
+        }
+
         // TODO Update product number in cart
     }
       
 
     const fetchAllProducts = async (pagination) => {
         try {
-            const response = await axios.get('http://localhost:8080/api/products/search', {
+            const response = await axios.get(`http://localhost:8080/api/cart/${userName}`, {
                 params: {
                     page: pagination.current - 1,  // API 通常以 0 为基数计数页面
                     size: pagination.pageSize,
@@ -45,13 +68,14 @@ const Cart = () => {
             })
             const data = await response.data.content
             const total = await response.data.totalElements
-            products = data.map((product, idx) => {
+            const  products = data.map((product, idx) => {
                 return {
                     key: String(idx),
-                    name: product.name,
-                    brand: product.brand,
-                    category: product.category,
-                    price: product.price,
+                    name: product.productDTO.name,
+                    brand: product.productDTO.brand,
+                    category: product.productDTO.category,
+                    price: product.productDTO.price,
+                    quantity: product.quantity,
                 }
             })
             setProducts(products)
