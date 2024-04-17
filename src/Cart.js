@@ -22,7 +22,7 @@ const Cart = () => {
 
     const handleDelete = (userName, productName) => async () => {
         try {
-            const response = await axios.delete(`http://localhost:8080/api/cart/${userName}/${productName}`)
+            const response = await axios.delete(`http://localhost:8080/api/carts/${userName}/${productName}`)
             console.log('response:', response);
         } catch (error) {
             console.error('There was an error on axios: ', error);
@@ -42,7 +42,7 @@ const Cart = () => {
 
     const handleNumberChange = (userName, productName) => async (value) => {
         try {
-            const response = await axios.post('http://localhost:8080/api/cart', {
+            const response = await axios.post('http://localhost:8080/api/carts', {
                 username: userName,
                 productname: productName,
                 quantity: value
@@ -60,7 +60,7 @@ const Cart = () => {
 
     const fetchAllProducts = async (pagination) => {
         try {
-            const response = await axios.get(`http://localhost:8080/api/cart/${userName}`, {
+            const response = await axios.get(`http://localhost:8080/api/carts/${userName}`, {
                 params: {
                     page: pagination.current - 1,  // API 通常以 0 为基数计数页面
                     size: pagination.pageSize,
