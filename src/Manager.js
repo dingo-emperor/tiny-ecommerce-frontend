@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Space, Table, Modal, Input, Button } from 'antd';
+import { Space, Table, Modal, Input, Button, Typography } from 'antd';
 import axios from 'axios';
+
+const { Title } = Typography;
 
 const Manager = () => {
     const [refresh, setRefresh] = useState(false);
@@ -69,7 +71,6 @@ const Manager = () => {
         console.log('addCategory:', addCategory);
         console.log('addPrice:', addPrice);
 
-        // TODO: Add product to database
         await axios.post('http://localhost:8080/api/products/add', {
             name: addName,
             brand: addBrand,
@@ -114,7 +115,6 @@ const Manager = () => {
             console.log('delete:', name);
             await axios.delete(`http://localhost:8080/api/products/${name}`)
             setRefresh(!refresh);
-            // TODO Delete product 
         }
     }
     
@@ -216,6 +216,7 @@ const Manager = () => {
     
     return (
         <div>
+            <Title>Welcome, Manager</Title>
             <Button type="primary" onClick={showAddModal}>Add product</Button>
             <Table columns={columns} dataSource={products} pagination={pagination} onChange={handleTableChange} />
             <Modal title="Edit product information" open={isEditModalOpen} onOk={handleEditOk} onCancel={handleEditCancel}>

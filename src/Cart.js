@@ -12,24 +12,26 @@ const Cart = () => {
         pageSize: 10,
         total: 50,
     });
+    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
         console.log('pagination', pagination)
         // 模拟从API获取数据
         fetchAllProducts(pagination);
-    }, [pagination.current, pagination.pageSize, pagination.total]);
+    }, [pagination.current, pagination.pageSize, pagination.total, refresh]);
 
-    const handleDelete = () => {
+    const handleDelete = (userName, productName) => async () => {
         // TODO Delete product from cart
+        setRefresh(!refresh);
     }
 
-    const clearCart = () => {
+    const clearCart = (userName) => async () => {
         // TODO: Clear cart in database
+        setRefresh(!refresh);
     }
 
-    const handleNumberChange = (value) => {
+    const handleNumberChange = (userName, productName) => async (value) => {
         // TODO Update product number in cart
-        console.log('changed', value);
     }
       
 
@@ -60,23 +62,17 @@ const Cart = () => {
                 {
                     key: '1',
                     name: 'John Brown',
-                    brand: 'b1',
-                    price: 32,
-                    category: 'c1',
+                    quantity: 32,
                 },
                 {
                     key: '2',
-                    name: 'Jim Green',
-                    brand: 'b2',
-                    price: 42,
-                    category: 'c2',
+                    name: 'John Brown',
+                    quantity: 42,
                 },
                 {
                     key: '3',
-                    name: 'Joe Black',
-                    brand: 'b3',
-                    price: 32,
-                    category: 'c3',
+                    name: 'John Brown',
+                    quantity: 32,
                 },
             ];
             setProducts(products)
@@ -95,14 +91,14 @@ const Cart = () => {
         key: 'name',
     },
     {
-        title: 'Brand',
-        dataIndex: 'brand',
-        key: 'brand',
-    },
-    {
         title: 'Category',
         dataIndex: 'category',
         key: 'category',
+    },
+    {
+        title: 'Brand',
+        dataIndex: 'brand',
+        key: 'brand',
     },
     {
         title: 'Price',
@@ -110,12 +106,20 @@ const Cart = () => {
         key: 'price',
     },
     {
+        title: 'Quantity',
+        key: 'quantity',
+        render: (_, record, idx) => (
+            <Space size="middle">
+                <InputNumber placeholder="number" min={1} defaultValue={record.quantity} onChange={handleNumberChange(userName, record.name)} />
+            </Space>
+        ),
+    },
+    {
         title: 'Action',
         key: 'action',
         render: (_, record, idx) => (
             <Space size="middle">
-                <InputNumber placeholder="number" min={0} onChange={handleNumberChange} />
-                <a onClick={handleDelete}>Delete</a>
+                <a onClick={handleDelete(userName, record.name)}>Delete</a>
             </Space>
         ),
     },
@@ -124,7 +128,7 @@ const Cart = () => {
     return (
         <div>
             <Title>Welcome, {userName}</Title>
-            <Button type="primary" onClick={clearCart}>Clear Cart</Button>
+            <Button type="primary" onClick={clearCart(userName)}>Clear Cart</Button>
             <Table columns={columns} dataSource={products} pagination={pagination} onChange={handleTableChange} />
         </div>
     )
