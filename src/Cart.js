@@ -16,6 +16,7 @@ const Cart = () => {
 
     useEffect(() => {
         console.log('pagination', pagination)
+        console.log('products', products)
         // 模拟从API获取数据
         fetchAllProducts(pagination);
     }, [pagination.current, pagination.pageSize, pagination.total, refresh]);
@@ -80,6 +81,7 @@ const Cart = () => {
             })
             setProducts(products)
             setPagination({ ...pagination, total: total })
+            setRefresh(!refresh);
         } catch (error) {    
             console.error('There was an error on axios: ', error);
             const products = [
