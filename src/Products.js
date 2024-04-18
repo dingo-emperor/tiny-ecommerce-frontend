@@ -209,7 +209,7 @@ const Products = () => {
           </Col>
         ))}
       </Row>
-      <Pagination onChange={changePage} total={total} /> {/* 根据实际情况调整 */}
+      <Pagination onChange={changePage} total={total} pageSize={pageSize} /> {/* 根据实际情况调整 */}
     </div>
   );
 };
