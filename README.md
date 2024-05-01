@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+Note: please start this frontend project **after** starting backend project
+
 # Install Node.js
 
 Install Node.js via [Install Node.js](https://nodejs.org/en/download)
