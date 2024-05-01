@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Install Node.js
 
-In the project directory, you can run:
+Install Node.js via [Install Node.js](https://nodejs.org/en/download)
 
 # Install Dependencies
 
